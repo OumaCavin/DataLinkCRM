@@ -1,0 +1,614 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}{{ title|default:"Dashboard" }} - {{ SITE_NAME|default:"DataLinkCRM" }}{% endblock %}
+
+{% block extra_css %}
+<style>
+.dashboard-card {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    transition: all 0.3s ease;
+}
+
+.dashboard-card:hover {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+}
+
+.stat-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 15px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.stat-card.customers {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.stat-card.projects {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+.stat-card.revenue {
+    background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+}
+
+.stat-card.subscriptions {
+    background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+}
+
+.quick-action-card {
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.3s ease;
+}
+
+.quick-action-card:hover {
+    text-decoration: none;
+    color: inherit;
+    transform: translateY(-5px);
+}
+
+.notification-item {
+    border-left: 4px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.notification-item.unread {
+    border-left-color: var(--kenya-green);
+    background-color: #f8f9fa;
+}
+
+.notification-item.high {
+    border-left-color: #dc3545;
+}
+
+.notification-item.critical {
+    border-left-color: #fd7e14;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.7; }
+    100% { opacity: 1; }
+}
+
+.sidebar-nav .nav-link {
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    margin: 0.25rem 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.sidebar-nav .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateX(5px);
+}
+
+.sidebar-nav .nav-link.active {
+    background-color: var(--kenya-green);
+    color: white;
+}
+
+.widget-container {
+    background: white;
+    border-radius: 15px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+.recent-activity-item {
+    padding: 1rem;
+    border-bottom: 1px solid #e9ecef;
+    transition: background-color 0.3s ease;
+}
+
+.recent-activity-item:hover {
+    background-color: #f8f9fa;
+}
+
+.recent-activity-item:last-child {
+    border-bottom: none;
+}
+
+.loading-spinner {
+    display: inline-block;
+    width: 1rem;
+    height: 1rem;
+    border: 2px solid #f3f3f3;
+    border-top: 2px solid var(--kenya-green);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.kenya-flag-colors {
+    background: linear-gradient(
+        45deg, 
+        #000000 33%, 
+        #BE123C 33%, 
+        #BE123C 66%, 
+        #006A4E 66%
+    );
+    height: 4px;
+    border-radius: 2px;
+    margin-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+    .stat-card {
+        margin-bottom: 1rem;
+    }
+    
+    .quick-action-card {
+        margin-bottom: 1rem;
+    }
+}
+
+/* DataTables customization for Kenya theme */
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    border-radius: 8px !important;
+    margin: 0 2px !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current,
+.dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+    background: var(--kenya-green) !important;
+    color: white !important;
+    border: none !important;
+}
+
+/* Kenya-themed alerts */
+.alert-kenya {
+    border: none;
+    border-radius: 10px;
+    padding: 1rem 1.5rem;
+}
+
+.alert-kenya-success {
+    background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+    color: white;
+}
+
+.alert-kenya-warning {
+    background: linear-gradient(135deg, #feca57 0%, #ff9ff3 100%);
+    color: #2c3e50;
+}
+
+.alert-kenya-info {
+    background: linear-gradient(135deg, #54a0ff 0%, #5f27cd 100%);
+    color: white;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="kenya-flag-colors"></div>
+
+<div class="row">
+    <!-- Welcome Section -->
+    <div class="col-12 mb-4">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h1 class="h3 mb-1">Welcome back, {{ user.get_full_name|default:user.username }}!</h1>
+                <p class="text-muted mb-0">
+                    <i class="fas fa-calendar me-2"></i>
+                    {{ current_date|date:"l, F d, Y" }} • 
+                    <i class="fas fa-clock me-2"></i>
+                    {{ current_date|time:"H:i" }} EAT
+                </p>
+            </div>
+            <div class="text-end">
+                <span class="badge bg-success fs-6">
+                    <i class="fas fa-circle me-1" style="font-size: 0.5rem;"></i>
+                    System Online
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Statistics Cards -->
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="stat-card customers">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h2 class="h1 mb-0">{{ stats.total_customers }}</h2>
+                    <p class="mb-0 opacity-75">Total Customers</p>
+                    <small class="opacity-75">
+                        <i class="fas fa-arrow-up me-1"></i>
+                        {{ month_customers }} this month
+                    </small>
+                </div>
+                <div class="fs-1 opacity-50">
+                    <i class="fas fa-users"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="stat-card projects">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h2 class="h1 mb-0">{{ stats.total_projects }}</h2>
+                    <p class="mb-0 opacity-75">Total Projects</p>
+                    <small class="opacity-75">
+                        <i class="fas fa-arrow-up me-1"></i>
+                        {{ active_projects }} active
+                    </small>
+                </div>
+                <div class="fs-1 opacity-50">
+                    <i class="fas fa-project-diagram"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="stat-card revenue">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h2 class="h1 mb-0">KSh {{ stats.total_revenue|floatformat:0 }}</h2>
+                    <p class="mb-0 opacity-75">Total Revenue</p>
+                    <small class="opacity-75">
+                        <i class="fas fa-arrow-up me-1"></i>
+                        KSh {{ month_revenue|floatformat:0 }} this month
+                    </small>
+                </div>
+                <div class="fs-1 opacity-50">
+                    <i class="fas fa-money-bill-wave"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="stat-card subscriptions">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h2 class="h1 mb-0">{{ stats.active_subscriptions }}</h2>
+                    <p class="mb-0 opacity-75">Active Subscriptions</p>
+                    <small class="opacity-75">
+                        <i class="fas fa-check me-1"></i>
+                        {{ stats.payment_success_rate|floatformat:1 }}% success rate
+                    </small>
+                </div>
+                <div class="fs-1 opacity-50">
+                    <i class="fas fa-credit-card"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Quick Actions -->
+    <div class="col-lg-8 mb-4">
+        <div class="widget-container">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="mb-0">
+                    <i class="fas fa-bolt text-warning me-2"></i>
+                    Quick Actions
+                </h5>
+                <a href="{% url 'settings:quick-actions' %}" class="btn btn-sm btn-outline-primary">
+                    <i class="fas fa-cog me-1"></i>Customize
+                </a>
+            </div>
+            
+            <div class="row">
+                {% for action in quick_actions %}
+                <div class="col-lg-3 col-md-4 col-sm-6 mb-3">
+                    <a href="{{ action.url }}" class="quick-action-card d-block dashboard-card p-3 text-center">
+                        <div class="fs-1 text-primary mb-2">
+                            <i class="{{ action.icon }}"></i>
+                        </div>
+                        <h6 class="mb-1">{{ action.name }}</h6>
+                        <small class="text-muted">{{ action.description|default:"Quick action" }}</small>
+                    </a>
+                </div>
+                {% empty %}
+                <div class="col-12">
+                    <div class="text-center py-4">
+                        <i class="fas fa-bolt fs-1 text-muted mb-3"></i>
+                        <p class="text-muted">No quick actions configured</p>
+                        <a href="{% url 'settings:quick-actions' %}" class="btn btn-primary">
+                            <i class="fas fa-plus me-2"></i>Add Quick Actions
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Notifications -->
+    <div class="col-lg-4 mb-4">
+        <div class="widget-container">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="mb-0">
+                    <i class="fas fa-bell text-info me-2"></i>
+                    Notifications
+                    {% if unread_count > 0 %}
+                    <span class="badge bg-danger">{{ unread_count }}</span>
+                    {% endif %}
+                </h5>
+                {% if unread_count > 0 %}
+                <button class="btn btn-sm btn-outline-success" id="markAllRead">
+                    <i class="fas fa-check-double me-1"></i>Mark All Read
+                </button>
+                {% endif %}
+            </div>
+
+            <div style="max-height: 400px; overflow-y: auto;">
+                {% for notification in notifications %}
+                <div class="notification-item p-3 mb-2 {% if not notification.is_read %}unread{% endif %} notification-{{ notification.priority }}" data-notification-id="{{ notification.id }}">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div class="flex-grow-1">
+                            <h6 class="mb-1">{{ notification.title }}</h6>
+                            <p class="mb-1 small text-muted">{{ notification.message|truncatechars:100 }}</p>
+                            <small class="text-muted">
+                                <i class="fas fa-clock me-1"></i>
+                                {{ notification.time_since_created }}
+                            </small>
+                        </div>
+                        {% if not notification.is_read %}
+                        <button class="btn btn-sm btn-outline-success mark-read" data-notification-id="{{ notification.id }}">
+                            <i class="fas fa-check"></i>
+                        </button>
+                        {% endif %}
+                    </div>
+                </div>
+                {% empty %}
+                <div class="text-center py-4">
+                    <i class="fas fa-bell-slash fs-1 text-muted mb-3"></i>
+                    <p class="text-muted">No notifications</p>
+                </div>
+                {% endfor %}
+            </div>
+
+            {% if notifications %}
+            <div class="text-center mt-3">
+                <a href="{% url 'settings:notifications' %}" class="btn btn-sm btn-outline-primary">
+                    View All Notifications
+                </a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Recent Activity -->
+    <div class="col-lg-6 mb-4">
+        <div class="widget-container">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="mb-0">
+                    <i class="fas fa-history text-success me-2"></i>
+                    Recent Customers
+                </h5>
+                <a href="{% url 'customers:index' %}" class="btn btn-sm btn-outline-primary">
+                    View All
+                </a>
+            </div>
+
+            {% for customer in recent_customers %}
+            <div class="recent-activity-item">
+                <div class="d-flex align-items-center">
+                    <div class="me-3">
+                        <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                            <i class="fas fa-user"></i>
+                        </div>
+                    </div>
+                    <div class="flex-grow-1">
+                        <h6 class="mb-0">{{ customer.get_full_name }}</h6>
+                        <p class="mb-0 text-muted small">{{ customer.email }}</p>
+                        <small class="text-muted">
+                            <i class="fas fa-clock me-1"></i>
+                            {{ customer.created_at|timesince }} ago
+                        </small>
+                    </div>
+                    <div>
+                        <a href="{% url 'customers:detail' customer.id %}" class="btn btn-sm btn-outline-primary">
+                            <i class="fas fa-eye"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="text-center py-4">
+                <i class="fas fa-users fs-1 text-muted mb-3"></i>
+                <p class="text-muted">No customers yet</p>
+                <a href="{% url 'customers:create' %}" class="btn btn-primary">
+                    <i class="fas fa-plus me-2"></i>Add First Customer
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="col-lg-6 mb-4">
+        <div class="widget-container">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="mb-0">
+                    <i class="fas fa-project-diagram text-warning me-2"></i>
+                    Recent Projects
+                </h5>
+                <a href="{% url 'projects:index' %}" class="btn btn-sm btn-outline-primary">
+                    View All
+                </a>
+            </div>
+
+            {% for project in recent_projects %}
+            <div class="recent-activity-item">
+                <div class="d-flex align-items-center">
+                    <div class="me-3">
+                        <div class="bg-warning text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                            <i class="fas fa-project-diagram"></i>
+                        </div>
+                    </div>
+                    <div class="flex-grow-1">
+                        <h6 class="mb-0">{{ project.name }}</h6>
+                        <p class="mb-0 text-muted small">
+                            <span class="badge bg-{{ project.get_status_color|default:'secondary' }} badge-sm">
+                                {{ project.get_status_display }}
+                            </span>
+                        </p>
+                        <small class="text-muted">
+                            <i class="fas fa-clock me-1"></i>
+                            {{ project.created_at|timesince }} ago
+                        </small>
+                    </div>
+                    <div>
+                        <a href="{% url 'projects:detail' project.id %}" class="btn btn-sm btn-outline-primary">
+                            <i class="fas fa-eye"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="text-center py-4">
+                <i class="fas fa-project-diagram fs-1 text-muted mb-3"></i>
+                <p class="text-muted">No projects yet</p>
+                <a href="{% url 'projects:create' %}" class="btn btn-primary">
+                    <i class="fas fa-plus me-2"></i>Create First Project
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<!-- Custom Widgets Section -->
+{% if user_widgets %}
+<div class="row">
+    <div class="col-12">
+        <div class="widget-container">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="mb-0">
+                    <i class="fas fa-th-large text-primary me-2"></i>
+                    Your Custom Widgets
+                </h5>
+                <a href="{% url 'settings:widgets' %}" class="btn btn-sm btn-outline-primary">
+                    <i class="fas fa-plus me-1"></i>Add Widget
+                </a>
+            </div>
+
+            <div class="row">
+                {% for widget in user_widgets %}
+                <div class="col-lg-4 col-md-6 mb-3">
+                    <div class="dashboard-card p-3">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <h6 class="mb-0">{{ widget.name }}</h6>
+                            <span class="badge bg-info badge-sm">{{ widget.get_widget_type_display }}</span>
+                        </div>
+                        <p class="text-muted small mb-2">{{ widget.description|default:"Custom widget" }}</p>
+                        <div class="text-center py-3">
+                            <i class="fas fa-chart-bar fs-1 text-muted"></i>
+                            <p class="text-muted small">Widget content will be loaded here</p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+$(document).ready(function() {
+    // Mark notification as read
+    $('.mark-read').click(function() {
+        const notificationId = $(this).data('notification-id');
+        const $item = $(this).closest('.notification-item');
+        
+        $.post(`{% url 'dashboard:mark-notification-read' 0 %}`.replace('0', notificationId))
+            .done(function(response) {
+                if (response.success) {
+                    $item.removeClass('unread');
+                    $(this).remove();
+                    
+                    // Update unread count
+                    const currentCount = parseInt($('.badge.bg-danger').text()) || 0;
+                    if (currentCount > 1) {
+                        $('.badge.bg-danger').text(currentCount - 1);
+                    } else {
+                        $('.badge.bg-danger').remove();
+                    }
+                }
+            }.bind(this))
+            .fail(function() {
+                alert('Failed to mark notification as read');
+            });
+    });
+
+    // Mark all notifications as read
+    $('#markAllRead').click(function() {
+        $.post('{% url "dashboard:mark-all-notifications-read" %}')
+            .done(function(response) {
+                if (response.success) {
+                    $('.notification-item').removeClass('unread');
+                    $('.badge.bg-danger').remove();
+                    $('.mark-read').remove();
+                }
+            })
+            .fail(function() {
+                alert('Failed to mark all notifications as read');
+            });
+    });
+
+    // Auto-refresh dashboard data every 5 minutes
+    setInterval(function() {
+        refreshDashboardData();
+    }, 300000);
+
+    function refreshDashboardData() {
+        // Add loading indicator
+        $('.stat-card').append('<div class="loading-spinner ms-2"></div>');
+        
+        $.get('{% url "dashboard:dashboard-data" %}')
+            .done(function(data) {
+                // Update statistics
+                $('.stat-card.customers h2').text(data.stats.total_customers);
+                $('.stat-card.projects h2').text(data.stats.total_projects);
+                $('.stat-card.revenue h2').text('KSh ' + data.stats.total_revenue.toLocaleString());
+                $('.stat-card.subscriptions h2').text(data.stats.active_subscriptions);
+                
+                // Update notification count
+                if (data.unread_notifications > 0) {
+                    let badge = $('.badge.bg-danger');
+                    if (badge.length) {
+                        badge.text(data.unread_notifications);
+                    } else {
+                        $('.fa-bell').parent().append(`<span class="badge bg-danger">${data.unread_notifications}</span>`);
+                    }
+                }
+            })
+            .fail(function() {
+                console.log('Failed to refresh dashboard data');
+            })
+            .always(function() {
+                $('.loading-spinner').remove();
+            });
+    }
+
+    // Initialize tooltips for quick actions
+    $('[data-bs-toggle="tooltip"]').tooltip();
+
+    // Add smooth scrolling to top when page loads
+    $('html, body').animate({ scrollTop: 0 }, 'fast');
+});
+</script>
+{% endblock %}

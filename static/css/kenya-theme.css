@@ -1,0 +1,553 @@
+/* Kenya Theme Styles for DataLinkCRM */
+/* Custom styles based on Kenya national colors and cultural elements */
+
+:root {
+    /* Kenya Flag Colors */
+    --kenya-flag-black: #000000;
+    --kenya-flag-red: #BE123C;
+    --kenya-flag-green: #006A4E;
+    --kenya-flag-white: #FFFFFF;
+    --kenya-flag-yellow: #FCDD09;
+    
+    /* Kenya-inspired gradients */
+    --kenya-sunset: linear-gradient(135deg, #BE123C 0%, #FCDD09 50%, #006A4E 100%);
+    --kenya-savanna: linear-gradient(135deg, #FCDD09 0%, #006A4E 100%);
+    --kenya-safari: linear-gradient(135deg, #000000 0%, #BE123C 50%, #006A4E 100%);
+    --kenya-harmony: linear-gradient(45deg, #000000 25%, #BE123C 25%, #BE123C 50%, #FCDD09 50%, #FCDD09 75%, #006A4E 75%);
+    
+    /* African-inspired patterns */
+    --african-pattern: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23006A4E' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* Kenya Flag Color Classes */
+.kenya-black { color: var(--kenya-flag-black) !important; }
+.kenya-red { color: var(--kenya-flag-red) !important; }
+.kenya-green { color: var(--kenya-flag-green) !important; }
+.kenya-yellow { color: var(--kenya-flag-yellow) !important; }
+.kenya-white { color: var(--kenya-flag-white) !important; }
+
+.bg-kenya-black { background-color: var(--kenya-flag-black) !important; }
+.bg-kenya-red { background-color: var(--kenya-flag-red) !important; }
+.bg-kenya-green { background-color: var(--kenya-flag-green) !important; }
+.bg-kenya-yellow { background-color: var(--kenya-flag-yellow) !important; }
+.bg-kenya-white { background-color: var(--kenya-flag-white) !important; }
+
+/* Kenya-inspired gradients */
+.kenya-gradient-sunset {
+    background: var(--kenya-sunset);
+    color: var(--kenya-flag-white);
+}
+
+.kenya-gradient-savanna {
+    background: var(--kenya-savanna);
+    color: var(--kenya-flag-white);
+}
+
+.kenya-gradient-safari {
+    background: var(--kenya-safari);
+    color: var(--kenya-flag-white);
+}
+
+/* Kenya flag stripe decoration */
+.kenya-flag-stripe {
+    background: var(--kenya-harmony);
+    height: 4px;
+    width: 100%;
+    border-radius: 2px;
+    margin: 1rem 0;
+}
+
+.kenya-flag-border {
+    border-left: 4px solid var(--kenya-flag-black);
+    border-top: 1px solid var(--kenya-flag-red);
+    border-right: 1px solid var(--kenya-green);
+    border-bottom: 1px solid var(--kenya-flag-yellow);
+}
+
+/* African-inspired patterns */
+.african-pattern-bg {
+    background-image: var(--african-pattern);
+}
+
+.african-border {
+    border-image: var(--kenya-harmony) 1;
+    border-width: 2px;
+    border-style: solid;
+}
+
+/* Kenya-themed buttons */
+.btn-kenya-primary {
+    background: linear-gradient(135deg, var(--kenya-flag-green) 0%, #008060 100%);
+    border: none;
+    color: var(--kenya-flag-white);
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(0, 106, 78, 0.3);
+    transition: all 0.3s ease;
+}
+
+.btn-kenya-primary:hover {
+    background: linear-gradient(135deg, #004736 0%, var(--kenya-flag-green) 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 106, 78, 0.4);
+    color: var(--kenya-flag-white);
+}
+
+.btn-kenya-secondary {
+    background: linear-gradient(135deg, var(--kenya-flag-red) 0%, #880E4F 100%);
+    border: none;
+    color: var(--kenya-flag-white);
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(190, 18, 60, 0.3);
+}
+
+.btn-kenya-secondary:hover {
+    background: linear-gradient(135deg, #660626 0%, var(--kenya-flag-red) 100%);
+    transform: translateY(-2px);
+    color: var(--kenya-flag-white);
+}
+
+.btn-kenya-warning {
+    background: linear-gradient(135deg, var(--kenya-flag-yellow) 0%, #F57F17 100%);
+    border: none;
+    color: var(--kenya-flag-black);
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(252, 221, 9, 0.3);
+}
+
+.btn-kenya-warning:hover {
+    background: linear-gradient(135deg, #D4AF37 0%, var(--kenya-flag-yellow) 100%);
+    transform: translateY(-2px);
+    color: var(--kenya-flag-black);
+}
+
+/* Kenya-themed cards */
+.kenya-card {
+    border: none;
+    border-radius: 15px;
+    background: var(--kenya-flag-white);
+    box-shadow: 0 10px 30px rgba(0, 106, 78, 0.1);
+    border-left: 5px solid var(--kenya-flag-green);
+    transition: all 0.3s ease;
+    overflow: hidden;
+    position: relative;
+}
+
+.kenya-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--kenya-harmony);
+}
+
+.kenya-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0, 106, 78, 0.15);
+}
+
+.kenya-card-header {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-bottom: none;
+    padding: 1.5rem;
+    position: relative;
+}
+
+.kenya-card-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--kenya-savanna);
+}
+
+/* Kenya-themed alerts */
+.alert-kenya {
+    border: none;
+    border-radius: 15px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.alert-kenya::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 5px;
+    height: 100%;
+}
+
+.alert-kenya-success {
+    background: linear-gradient(135deg, #D1FAE5 0%, #A7F3D0 100%);
+    color: #065F46;
+    border-left: 5px solid #10B981;
+}
+
+.alert-kenya-success::before {
+    background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+}
+
+.alert-kenya-warning {
+    background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
+    color: #92400E;
+    border-left: 5px solid var(--kenya-flag-yellow);
+}
+
+.alert-kenya-warning::before {
+    background: linear-gradient(135deg, var(--kenya-flag-yellow) 0%, #F57F17 100%);
+}
+
+.alert-kenya-danger {
+    background: linear-gradient(135deg, #FEE2E2 0%, #FECACA 100%);
+    color: #991B1B;
+    border-left: 5px solid var(--kenya-flag-red);
+}
+
+.alert-kenya-danger::before {
+    background: linear-gradient(135deg, var(--kenya-flag-red) 0%, #880E4F 100%);
+}
+
+.alert-kenya-info {
+    background: linear-gradient(135deg, #DBEAFE 0%, #BFDBFE 100%);
+    color: #1E40AF;
+    border-left: 5px solid var(--kenya-flag-green);
+}
+
+.alert-kenya-info::before {
+    background: linear-gradient(135deg, var(--kenya-flag-green) 0%, #008060 100%);
+}
+
+/* Kenya-themed badges */
+.badge-kenya {
+    background: linear-gradient(135deg, var(--kenya-flag-green) 0%, #008060 100%);
+    color: var(--kenya-flag-white);
+    border-radius: 20px;
+    padding: 0.5rem 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+}
+
+.badge-kenya-warning {
+    background: linear-gradient(135deg, var(--kenya-flag-yellow) 0%, #F57F17 100%);
+    color: var(--kenya-flag-black);
+}
+
+.badge-kenya-danger {
+    background: linear-gradient(135deg, var(--kenya-flag-red) 0%, #880E4F 100%);
+}
+
+/* Kenya-themed form elements */
+.form-control-kenya {
+    border: 2px solid var(--gray-300);
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+}
+
+.form-control-kenya:focus {
+    border-color: var(--kenya-flag-green);
+    box-shadow: 0 0 0 3px rgba(0, 106, 78, 0.1);
+    outline: none;
+}
+
+.form-select-kenya {
+    border: 2px solid var(--gray-300);
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23006A4E' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+}
+
+.form-select-kenya:focus {
+    border-color: var(--kenya-flag-green);
+    box-shadow: 0 0 0 3px rgba(0, 106, 78, 0.1);
+    outline: none;
+}
+
+/* Kenya-themed navigation */
+.navbar-kenya {
+    background: linear-gradient(135deg, var(--kenya-flag-green) 0%, #004736 100%);
+    box-shadow: 0 4px 20px rgba(0, 106, 78, 0.2);
+    border-bottom: 3px solid var(--kenya-flag-yellow);
+}
+
+.navbar-kenya .navbar-brand {
+    color: var(--kenya-flag-white);
+    font-weight: 700;
+    font-size: 1.5rem;
+}
+
+.navbar-kenya .navbar-nav .nav-link {
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    margin: 0 0.25rem;
+    transition: all 0.3s ease;
+}
+
+.navbar-kenya .navbar-nav .nav-link:hover {
+    color: var(--kenya-flag-white);
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-1px);
+}
+
+.navbar-kenya .navbar-nav .nav-link.active {
+    color: var(--kenya-flag-yellow);
+    background-color: rgba(252, 221, 9, 0.2);
+}
+
+/* Kenya-themed progress bars */
+.progress-kenya {
+    height: 8px;
+    background-color: var(--gray-200);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.progress-kenya .progress-bar {
+    background: linear-gradient(90deg, var(--kenya-flag-green) 0%, #008060 50%, var(--kenya-flag-yellow) 100%);
+    border-radius: 10px;
+    transition: width 0.6s ease;
+}
+
+/* Kenya-themed tables */
+.table-kenya {
+    background: var(--kenya-flag-white);
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 106, 78, 0.1);
+}
+
+.table-kenya thead th {
+    background: linear-gradient(135deg, var(--kenya-flag-green) 0%, #004736 100%);
+    color: var(--kenya-flag-white);
+    border: none;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 1rem;
+    position: relative;
+}
+
+.table-kenya thead th::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--kenya-flag-yellow);
+}
+
+.table-kenya tbody tr:hover {
+    background-color: rgba(0, 106, 78, 0.05);
+}
+
+.table-kenya tbody tr:nth-child(even) {
+    background-color: rgba(252, 221, 9, 0.05);
+}
+
+/* Kenya-themed modals */
+.modal-kenya .modal-content {
+    border: none;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 106, 78, 0.2);
+    overflow: hidden;
+}
+
+.modal-kenya .modal-header {
+    background: linear-gradient(135deg, var(--kenya-flag-green) 0%, #004736 100%);
+    color: var(--kenya-flag-white);
+    border: none;
+    padding: 1.5rem 2rem;
+    position: relative;
+}
+
+.modal-kenya .modal-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--kenya-flag-yellow);
+}
+
+.modal-kenya .modal-body {
+    padding: 2rem;
+    background: var(--kenya-flag-white);
+}
+
+.modal-kenya .modal-footer {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border: none;
+    padding: 1.5rem 2rem;
+    position: relative;
+}
+
+.modal-kenya .modal-footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--kenya-savanna);
+}
+
+/* Kenya-themed date picker */
+.flatpickr-calendar.kenya-theme {
+    background: var(--kenya-flag-white);
+    border: 2px solid var(--kenya-flag-green);
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 106, 78, 0.2);
+}
+
+.flatpickr-calendar.kenya-theme .flatpickr-day {
+    color: var(--kenya-flag-black);
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.flatpickr-calendar.kenya-theme .flatpickr-day:hover {
+    background-color: rgba(0, 106, 78, 0.1);
+    transform: scale(1.1);
+}
+
+.flatpickr-calendar.kenya-theme .flatpickr-day.selected {
+    background: linear-gradient(135deg, var(--kenya-flag-green) 0%, #008060 100%);
+    color: var(--kenya-flag-white);
+    border: none;
+}
+
+.flatpickr-calendar.kenya-theme .flatpickr-months {
+    background: var(--kenya-flag-green);
+    color: var(--kenya-flag-white);
+    border-radius: 15px 15px 0 0;
+}
+
+.flatpickr-calendar.kenya-theme .flatpickr-current-month {
+    background: var(--kenya-flag-green);
+    color: var(--kenya-flag-white);
+}
+
+/* Kenya-themed footer */
+.footer-kenya {
+    background: linear-gradient(135deg, var(--kenya-flag-black) 0%, #1a1a1a 100%);
+    color: var(--kenya-flag-white);
+    padding: 2rem 0;
+    margin-top: auto;
+    position: relative;
+}
+
+.footer-kenya::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--kenya-harmony);
+}
+
+.footer-kenya a {
+    color: var(--kenya-flag-white);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.footer-kenya a:hover {
+    color: var(--kenya-flag-yellow);
+    transform: translateY(-1px);
+}
+
+/* Kenya-themed loading states */
+.kenya-loading {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(0, 106, 78, 0.1);
+    border-radius: 50%;
+    border-top: 2px solid var(--kenya-flag-green);
+    animation: kenya-spin 1s linear infinite;
+}
+
+@keyframes kenya-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Kenya-themed pulse animation */
+.kenya-pulse {
+    animation: kenya-pulse-glow 2s infinite;
+}
+
+@keyframes kenya-pulse-glow {
+    0% { box-shadow: 0 0 0 0 rgba(0, 106, 78, 0.7); }
+    70% { box-shadow: 0 0 0 10px rgba(0, 106, 78, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(0, 106, 78, 0); }
+}
+
+/* Responsive Kenya theme */
+@media (max-width: 768px) {
+    .kenya-card {
+        margin-bottom: 1rem;
+    }
+    
+    .modal-kenya .modal-body {
+        padding: 1.5rem;
+    }
+    
+    .navbar-kenya .navbar-nav .nav-link {
+        padding: 0.75rem 1rem;
+        margin: 0.25rem 0;
+    }
+}
+
+/* Dark mode Kenya theme */
+@media (prefers-color-scheme: dark) {
+    .kenya-card {
+        background: var(--gray-800);
+        color: var(--kenya-flag-white);
+        border-color: var(--kenya-flag-green);
+    }
+    
+    .form-control-kenya {
+        background-color: var(--gray-700);
+        color: var(--kenya-flag-white);
+        border-color: var(--gray-600);
+    }
+    
+    .table-kenya {
+        background: var(--gray-800);
+        color: var(--kenya-flag-white);
+    }
+}
+
+/* Print Kenya theme */
+@media print {
+    .kenya-card,
+    .alert-kenya,
+    .btn-kenya-primary,
+    .btn-kenya-secondary,
+    .btn-kenya-warning {
+        box-shadow: none !important;
+        border: 1px solid var(--kenya-flag-green) !important;
+    }
+    
+    .kenya-gradient-sunset,
+    .kenya-gradient-savanna,
+    .kenya-gradient-safari {
+        background: white !important;
+        color: var(--kenya-flag-black) !important;
+    }
+}

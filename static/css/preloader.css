@@ -1,0 +1,294 @@
+/* DataLinkCRM Preloader Styles */
+/* Kenya-themed loading animation */
+
+.preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #006A4E 0%, #004736 50%, #008060 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    transition: opacity 0.5s ease-out;
+}
+
+.preloader.fade-out {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.preloader-content {
+    text-align: center;
+    color: white;
+    animation: fadeInUp 0.8s ease-out;
+}
+
+.preloader-spinner {
+    width: 60px;
+    height: 60px;
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top: 4px solid #FCDD09;
+    animation: kenya-spin 1.5s linear infinite;
+    margin: 0 auto 20px;
+    position: relative;
+}
+
+.preloader-spinner::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 30px;
+    height: 30px;
+    background: linear-gradient(45deg, #BE123C 0%, #FCDD09 50%, #006A4E 100%);
+    border-radius: 50%;
+    animation: kenya-pulse 2s ease-in-out infinite;
+}
+
+.preloader p {
+    font-size: 18px;
+    font-weight: 500;
+    margin: 0;
+    opacity: 0.9;
+    animation: kenya-fadeInOut 2s ease-in-out infinite;
+}
+
+.preloader-brand {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 30px;
+    background: linear-gradient(45deg, #FCDD09 0%, #BE123C 50%, #006A4E 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* Kenya-themed animations */
+@keyframes kenya-spin {
+    0% {
+        transform: rotate(0deg);
+        border-top-color: #FCDD09;
+    }
+    25% {
+        border-top-color: #BE123C;
+    }
+    50% {
+        transform: rotate(180deg);
+        border-top-color: #006A4E;
+    }
+    75% {
+        border-top-color: #FCDD09;
+    }
+    100% {
+        transform: rotate(360deg);
+        border-top-color: #FCDD09;
+    }
+}
+
+@keyframes kenya-pulse {
+    0%, 100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.7;
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.2);
+        opacity: 1;
+    }
+}
+
+@keyframes kenya-fadeInOut {
+    0%, 100% {
+        opacity: 0.9;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Progress bar animation */
+.preloader-progress {
+    width: 300px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 2px;
+    margin: 30px auto 0;
+    overflow: hidden;
+}
+
+.preloader-progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #FCDD09 0%, #BE123C 50%, #006A4E 100%);
+    border-radius: 2px;
+    animation: kenya-progress 3s ease-in-out infinite;
+}
+
+@keyframes kenya-progress {
+    0% {
+        width: 0%;
+        transform: translateX(-100%);
+    }
+    50% {
+        width: 100%;
+        transform: translateX(0%);
+    }
+    100% {
+        width: 0%;
+        transform: translateX(100%);
+    }
+}
+
+/* Kenya flag colors background animation */
+.preloader::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, 
+        transparent 25%, 
+        rgba(190, 18, 60, 0.1) 25%, 
+        rgba(190, 18, 60, 0.1) 50%, 
+        rgba(0, 106, 78, 0.1) 50%, 
+        rgba(0, 106, 78, 0.1) 75%, 
+        transparent 75%
+    );
+    background-size: 40px 40px;
+    animation: kenya-pattern 4s linear infinite;
+    z-index: -1;
+}
+
+@keyframes kenya-pattern {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 40px 40px;
+    }
+}
+
+/* Logo animation */
+.preloader-logo {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 20px;
+    position: relative;
+}
+
+.preloader-logo::before {
+    content: 'DL';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 32px;
+    font-weight: 700;
+    color: white;
+    z-index: 2;
+}
+
+.preloader-logo::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: conic-gradient(from 0deg, 
+        #000000 0deg 90deg, 
+        #BE123C 90deg 180deg, 
+        #FCDD09 180deg 270deg, 
+        #006A4E 270deg 360deg
+    );
+    border-radius: 50%;
+    animation: kenya-logo-rotate 3s linear infinite;
+}
+
+@keyframes kenya-logo-rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Responsive design */
+@media (max-width: 576px) {
+    .preloader-spinner {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .preloader-content {
+        padding: 0 20px;
+    }
+    
+    .preloader p {
+        font-size: 16px;
+    }
+    
+    .preloader-brand {
+        font-size: 20px;
+    }
+    
+    .preloader-progress {
+        width: 250px;
+    }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    .preloader {
+        background: linear-gradient(135deg, #002d24 0%, #001a16 50%, #003d32 100%);
+    }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+    .preloader {
+        background: #000000;
+    }
+    
+    .preloader-spinner {
+        border-color: #666666;
+        border-top-color: #ffffff;
+    }
+    
+    .preloader-content {
+        color: #ffffff;
+    }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    .preloader-spinner,
+    .preloader-spinner::before,
+    .preloader-progress-bar,
+    .preloader::before,
+    .preloader-logo::after {
+        animation: none;
+    }
+    
+    .preloader-content {
+        animation: none;
+    }
+}
