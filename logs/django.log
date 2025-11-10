@@ -72,3 +72,4 @@ django.template.exceptions.TemplateSyntaxError: Invalid block tag on line 9: 'st
 ERROR 2025-11-10 12:11:48,623 basehttp 1041 140455851493056 "GET /home/ HTTP/1.1" 500 198542
 INFO 2025-11-10 12:12:10,422 autoreload 1109 139666414803840 Watching for file changes with StatReloader
 INFO 2025-11-10 12:12:14,108 basehttp 1109 139665267132096 "GET /home/ HTTP/1.1" 200 15193
+INFO 2025-11-10 14:00:26,229 autoreload 1132 140082491444096 Watching for file changes with StatReloader

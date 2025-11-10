@@ -18,7 +18,7 @@ dj-database-url==2.1.0
 
 # Payment integration
 stripe==7.8.0
-python-mpesa==0.2.8
+python-mpesa>=0.2.0,<1.0.0
 requests==2.31.0
 cryptography==41.0.7
 
